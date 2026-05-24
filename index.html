@@ -3,17 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İlk Web Sitem</title>
-    <link rel="stylesheet" href="style.css">
+    <title>⚠️ SIKICI SİTE ⚠️</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: auto; /* Kaydırma çubukları çıksın diye */
+        }
+        #MetinKutusu {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding: 10px;
+            max-width: 80%;
+        }
+        #GıcıkButon {
+            background-color: #ff4757;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+            transition: all 0.2s ease;
+            position: relative; /* Hareket edebilmesi için */
+        }
+        #Sayac {
+            font-size: 14px;
+            color: #888;
+            margin-top: 15px;
+        }
+        #OdulGorseli {
+            display: none;
+            width: 300px;
+            margin-top: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px #00ff88;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="card">
-        <h1>Kod Dünyasına Hoş Geldin!</h1>
-        <p>HTML, CSS ve JavaScript kullanarak ilk web sitemi tasarlıyorum.</p>
-        <button id="renkButonu">Arka Planı Değiştir</button>
-    </div>
+    <div id="MetinKutusu">Burası çok sıkıcı bir site... Buraya sakın basma!</div>
+    
+    <button id="GıcıkButon" onclick="butonaBasildi()">TIKLA</button>
+    
+    <div id="Sayac">Basılma Sayısı: <span id="skor">0</span></div>
 
-    <script src="script.js"></script>
+    <img id="OdulGorseli" src="https://api.dicebear.com/7.x/bottts/svg?seed=champion" alt="Ödül">
+
+    <script>
+        let sayac = 0;
+        const buton = document.getElementById('GıcıkButon');
+        const metin = document.getElementById('MetinKutusu');
+        const skorEkrani = document.getElementById('skor');
+        const odul = document.getElementById('OdulGorseli');
+
+        function butonaBasildi() {
+            sayac++;
+            skorEkrani.innerText = sayac;
+
+            if (sayac === 5) {
+                metin.innerText = "Ya basma şu butona falan işte...";
+            }
+            else if (sayac === 10) {
+                metin.innerText = "Burası çok sıkıcı! Strese girdin, gitmen lazım buradan! 😡";
+                // Butonu çok uzağa fırlat (sağa ve aşağıya), kullanıcı kaydırarak arasın!
+                buton.style.position = 'absolute';
+                buton.style.left = '1500px';
+                buton.style.top = '1200px';
+                metin.innerHTML += "<br><br><i>(Hadi bul bulabilirsen, yana kaydır!)</i>";
+            }
+            else if (sayac === 11) {
+                // Tekrar ortaya yakın ama gıcık bir yere alalım
+                buton.style.position = 'relative';
+                buton.style.left = '0px';
+                buton.style.top = '0px';
+                metin.innerText = "Nasıl buldun lan onu? Neyse, basma artık!";
+            }
+            else if (sayac === 20) {
+                metin.innerText = "Bak hala basıyor... İnatçı mısın nesin?";
+            }
+            else if (sayac === 50) {
+                metin.innerText = "Yarı yol bitti ama asla 100 yapamazsın, bence vazgeç.";
+            }
+            else if (sayac === 80) {
+                metin.innerText = "Eline ne geçecek sanki? Az kaldı ama vermeyeceğim ödülü!";
+            }
+            else if (sayac === 95) {
+                metin.innerText = "Şaka şaka, son 5 tık! Geliyor gelmekte olan...";
+            }
+            else if (sayac >= 100) {
+                metin.innerText = "🏆 TEBRİKLER! Büyük ödülü kazandın! Sen gerçek bir kralsın! 🏆";
+                metin.style.color = "#00ff88";
+                buton.style.display = "none"; // Butonu gizle
+                odul.style.display = "block"; // Ödülü göster
+            }
+        }
+    </script>
+
 </body>
 </html>
