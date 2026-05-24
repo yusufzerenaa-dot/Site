@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚠️ SIKICI SİTE ⚠️</title>
+    <title>⚠️ ÇILDIRTAN SİTE ⚠️</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #1a1a1a;
+            background-color: #121212;
             color: #ffffff;
             text-align: center;
             margin: 0;
@@ -17,7 +17,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            overflow: auto; /* Kaydırma çubukları çıksın diye */
+            overflow: auto;
         }
         #MetinKutusu {
             font-size: 24px;
@@ -25,6 +25,7 @@
             margin-bottom: 20px;
             padding: 10px;
             max-width: 80%;
+            transition: all 0.3s;
         }
         #GıcıkButon {
             background-color: #ff4757;
@@ -37,16 +38,32 @@
             cursor: pointer;
             box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
             transition: all 0.2s ease;
-            position: relative; /* Hareket edebilmesi için */
+            position: relative;
+        }
+        /* Sağ üstte belirecek ikinci gizli buton */
+        #SagUstButon {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #ffa500;
+            color: black;
+            border: 2px solid white;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            z-index: 1000;
         }
         #Sayac {
-            font-size: 14px;
+            font-size: 16px;
             color: #888;
-            margin-top: 15px;
+            margin-top: 20px;
         }
         #OdulGorseli {
             display: none;
-            width: 300px;
+            width: 250px;
             margin-top: 20px;
             border-radius: 15px;
             box-shadow: 0 0 20px #00ff88;
@@ -55,17 +72,20 @@
 </head>
 <body>
 
-    <div id="MetinKutusu">Burası çok sıkıcı bir site... Buraya sakın basma!</div>
+    <div id="MetinKutusu">Burası sıkıcı bir site... Sakın butona basma!</div>
     
     <button id="GıcıkButon" onclick="butonaBasildi()">TIKLA</button>
     
-    <div id="Sayac">Basılma Sayısı: <span id="skor">0</span></div>
+    <button id="SagUstButon" onclick="sagUstBasildi()">BENİ DE TIKLA!</button>
+    
+    <div id="Sayac">Toplam Basılma Sayısı: <span id="skor">0</span></div>
 
     <img id="OdulGorseli" src="https://api.dicebear.com/7.x/bottts/svg?seed=champion" alt="Ödül">
 
     <script>
         let sayac = 0;
         const buton = document.getElementById('GıcıkButon');
+        const sagUstBtn = document.getElementById('SagUstButon');
         const metin = document.getElementById('MetinKutusu');
         const skorEkrani = document.getElementById('skor');
         const odul = document.getElementById('OdulGorseli');
@@ -74,42 +94,111 @@
             sayac++;
             skorEkrani.innerText = sayac;
 
+            // --- 0 - 100 ARASI DELİRMELER ---
             if (sayac === 5) {
                 metin.innerText = "Ya basma şu butona falan işte...";
             }
             else if (sayac === 10) {
                 metin.innerText = "Burası çok sıkıcı! Strese girdin, gitmen lazım buradan! 😡";
-                // Butonu çok uzağa fırlat (sağa ve aşağıya), kullanıcı kaydırarak arasın!
+                // Buton uzağa kaçıyor
                 buton.style.position = 'absolute';
-                buton.style.left = '1500px';
-                buton.style.top = '1200px';
-                metin.innerHTML += "<br><br><i>(Hadi bul bulabilirsen, yana kaydır!)</i>";
+                buton.style.left = '1400px';
+                buton.style.top = '1000px';
             }
             else if (sayac === 11) {
-                // Tekrar ortaya yakın ama gıcık bir yere alalım
+                // Geri geliyor ama küçülüyor!
                 buton.style.position = 'relative';
                 buton.style.left = '0px';
                 buton.style.top = '0px';
-                metin.innerText = "Nasıl buldun lan onu? Neyse, basma artık!";
+                buton.style.padding = '8px 15px';
+                buton.style.fontSize = '12px';
+                metin.innerText = "Küçüldüm ki tıklayamayasın haha!";
             }
-            else if (sayac === 20) {
-                metin.innerText = "Bak hala basıyor... İnatçı mısın nesin?";
+            else if (sayac === 30) {
+                // Dev gibi oluyor!
+                buton.style.padding = '40px 80px';
+                buton.style.fontSize = '36px';
+                metin.innerText = "Al o zaman, kocaman buton! Ekranı kaplasın!";
             }
             else if (sayac === 50) {
-                metin.innerText = "Yarı yol bitti ama asla 100 yapamazsın, bence vazgeç.";
+                // Normal boyuta dönüp renk değiştiriyor
+                buton.style.padding = '15px 30px';
+                buton.style.fontSize = '18px';
+                buton.style.backgroundColor = '#9b59b6';
+                metin.innerText = "Rengim mor oldu, inatçısın biliyorum ama vazgeç.";
             }
             else if (sayac === 80) {
-                metin.innerText = "Eline ne geçecek sanki? Az kaldı ama vermeyeceğim ödülü!";
+                metin.innerText = "Eline ne geçecek sanki? Az kaldı bak!";
             }
-            else if (sayac === 95) {
-                metin.innerText = "Şaka şaka, son 5 tık! Geliyor gelmekte olan...";
-            }
-            else if (sayac >= 100) {
-                metin.innerText = "🏆 TEBRİKLER! Büyük ödülü kazandın! Sen gerçek bir kralsın! 🏆";
+            // --- 100 TIK ÖDÜLÜ ---
+            else if (sayac === 100) {
+                metin.innerText = "🏆 Al bakalım sana ödül! Ama oyun bitmedi... 🏆";
                 metin.style.color = "#00ff88";
-                buton.style.display = "none"; // Butonu gizle
-                odul.style.display = "block"; // Ödülü göster
+                odul.style.display = "block"; // Ödülü gösterdik
+                
+                // 5 saniye sonra sağ üstteki gıcık butonu açıyoruz!
+                setTimeout(() => {
+                    sagUstBtn.style.display = "block";
+                    metin.innerText = "Sağ üste bak! Yeni bir düşman belirdi! 300'e giden yol başladı!";
+                    metin.style.color = "#ffffff";
+                }, 5000);
             }
+            
+            // --- 100 - 300 ARASI SÜPER ÇILDIRTMA ---
+            else if (sayac > 100 && sayac < 300) {
+                odul.style.display = "none"; // Ödülü tekrar sakla ki ekranda yer kalsın
+                
+                if (sayac === 120) {
+                    metin.innerText = "Ya yapma artık yeter ya! Harbiden sıkılmadın mı?";
+                }
+                else if (sayac === 160) {
+                    // Buton her basışta rastgele büyüyüp küçülecek!
+                    let rastgeleBoyut = Math.floor(Math.random() * 30) + 10;
+                    buton.style.padding = rastgeleBoyut + "px " + (rastgeleBoyut*2) + "px";
+                    metin.innerText = "Butonun boyutuyla oynuyorum, durduramazsın!";
+                }
+                else if (sayac === 200) {
+                    buton.style.padding = '15px 30px'; // Sıfırla
+                    metin.innerText = "200 mü?! Gerçekten her şeyi yapıyorsun saklamak için ama hala basıyorsun!";
+                }
+                else if (sayac === 250) {
+                    metin.innerText = "Son 50 tık... Lütfen bırak klavyeyi/telefonu, yalvarırım!";
+                    buton.style.backgroundColor = '#1abc9c';
+                }
+                else if (sayac === 290) {
+                    metin.innerText = "Hayır... Olamaz... 300'e ulaşıyor!!";
+                    buton.style.transform = "scale(0.5)"; // İyice küçültüyoruz zorlaşsın
+                }
+            }
+            
+            // --- BÜYÜK FİNAL: 300 TIK ---
+            else if (sayac >= 300) {
+                metin.innerText = "👑 KESİN BİLGİ: SEN BİR EFSANESİN! 300 KERE BASTIN! SİTEYİ ÇÖKERTTİN! 👑";
+                metin.style.color = "#ffff00";
+                metin.style.fontSize = "30px";
+                buton.innerText = "Kral Elendi";
+                buton.disabled = true; // Artık basılmasın
+                buton.style.transform = "scale(1)";
+                buton.style.backgroundColor = "#555";
+                sagUstBtn.style.display = "none"; // Sağ üsttekini de yok et
+                odul.src = "https://api.dicebear.com/7.x/bottts/svg?seed=ultra-boss"; // Ultra ödül resmi
+                odul.style.display = "block";
+                odul.style.width = "350px";
+                odul.style.boxShadow = "0 0 30px #ffff00";
+            }
+        }
+
+        // Sağ üstteki gıcık butona basılırsa ne olacak?
+        function sagUstBasildi() {
+            sayac += 5; // Bu buton daha kıymetli, 5 puan birden versin!
+            skorEkrani.innerText = sayac;
+            metin.innerText = "Ooo sağ üstteki butonu avladın! +5 Puan kazandın!";
+            
+            // Basılınca ekranın başka bir köşesine kaçsın!
+            let randomTop = Math.floor(Math.random() * 80) + 5;
+            let randomRight = Math.floor(Math.random() * 80) + 5;
+            sagUstBtn.style.top = randomTop + "%";
+            sagUstBtn.style.right = randomRight + "%";
         }
     </script>
 
